@@ -1,9 +1,17 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
+export enum BankBranch {
+  RAJALDESAR = 'rajaldesar',
+  DIDWANA = 'didwana',
+}
+
 @Entity('stocks')
 export class Stock {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ name: 'bill_no', length: 20, nullable: true })
+  billNo: string;
 
   @Column({ type: 'date' })
   date: string;
@@ -41,14 +49,20 @@ export class Stock {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   rate: number;
 
+  @Column({ name: 'booking_rate', type: 'decimal', precision: 10, scale: 2, nullable: true })
+  bookingRate: number;
+
+  @Column({ name: 'booking_weight', type: 'decimal', precision: 10, scale: 3, nullable: true })
+  bookingWeight: number;
+
   @Column({ name: 'balance_total', type: 'decimal', precision: 15, scale: 2, nullable: true })
   balanceTotal: number;
 
   @Column({ name: 'avg_rate', type: 'decimal', precision: 10, scale: 2, nullable: true })
   avgRate: number;
 
-  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
-  bank: number;
+  @Column({ type: 'enum', enum: BankBranch, nullable: true })
+  bank: BankBranch;
 
   @CreateDateColumn()
   createdAt: Date;
