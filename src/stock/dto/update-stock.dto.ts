@@ -13,10 +13,10 @@ export class UpdateStockDto {
   @IsEnum(['didwana', 'rajaldesar'])
   godown: string;
 
-  @ApiPropertyOptional({ enum: ['sell', 'buy'] })
+  @ApiPropertyOptional({ enum: ['buy', 'sell'], description: 'Transaction type (used internally)' })
   @IsOptional()
-  @IsEnum(['sell', 'buy'])
-  sellBuy: string;
+  @IsEnum(['buy', 'sell'])
+  type: string;
 
   @ApiPropertyOptional()
   @IsOptional()

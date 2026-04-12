@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiProduces, ApiResponse, ApiTags } from '@nestjs/swagger';
+import type { Response } from 'express';
 import { StockService } from './stock.service';
+import { ExportService } from './export.service';
 import { StockResponseDto } from './dto/stock-response.dto';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
@@ -11,7 +13,10 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 @UseGuards(AuthGuard('jwt'))
 @Controller('stock')
 export class StockController {
-  constructor(private readonly stockService: StockService) {}
+  constructor(
+    private readonly stockService: StockService,
+    private readonly exportService: ExportService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all stock data' })
@@ -45,5 +50,18 @@ export class StockController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.stockService.remove(id);
+  }
+
+  @Get('export/excel')
+  @ApiOperation({ summary: 'Export stock ledger as Excel file' })
+  @ApiProduces('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  @ApiResponse({ status: 200, description: 'Excel file downloaded' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async exportExcel(@Res() res: Response) {
+    const buffer = await this.exportService.exportStocksToExcel();
+    const filename = `stock-ledger-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(buffer);
   }
 }

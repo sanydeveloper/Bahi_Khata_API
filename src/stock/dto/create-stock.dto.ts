@@ -11,9 +11,9 @@ export class CreateStockDto {
   @IsEnum(['didwana', 'rajaldesar'])
   godown: string;
 
-  @ApiProperty({ enum: ['sell', 'buy'] })
-  @IsEnum(['sell', 'buy'])
-  sellBuy: string;
+  @ApiProperty({ enum: ['buy', 'sell'], description: 'Transaction type (used internally to generate bill number and calculate balance)' })
+  @IsEnum(['buy', 'sell'])
+  type: string;
 
   @ApiPropertyOptional({ example: 10.5 })
   @IsOptional()

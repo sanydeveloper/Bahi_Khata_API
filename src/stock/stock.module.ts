@@ -5,10 +5,11 @@ import { StockService } from './stock.service';
 import { Stock } from './stock.entity';
 import { InventoryController } from './inventory.controller';
 import { InventoryService } from './inventory.service';
+import { ExportService } from './export.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Stock])],
   controllers: [StockController, InventoryController],
-  providers: [StockService, InventoryService],
+  providers: [StockService, InventoryService, ExportService],
 })
 export class StockModule {}

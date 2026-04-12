@@ -19,9 +19,6 @@ export class Stock {
   @Column({ length: 50 })
   godown: string;
 
-  @Column({ name: 'sell_buy', length: 10 })
-  sellBuy: string;
-
   @Column({ type: 'decimal', precision: 10, scale: 3, nullable: true })
   qty: number;
 
