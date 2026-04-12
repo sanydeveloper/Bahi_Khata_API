@@ -19,9 +19,6 @@ export class Stock {
   @Column({ length: 50 })
   godown: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 3, nullable: true })
-  qty: number;
-
   @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
   amount: number;
 

@@ -19,13 +19,12 @@ export class StockService {
 
   async create(dto: CreateStockDto): Promise<{ message: string }> {
     await this.dataSource.query(
-      `CALL manage_stock($1, NULL, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+      `CALL manage_stock($1, NULL, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
       [
         'I',
         dto.date,
         dto.godown,
         dto.type,
-        dto.qty ?? null,
         dto.amount ?? null,
         dto.customerName ?? null,
         dto.weightChorsa ?? 0,
@@ -43,14 +42,13 @@ export class StockService {
 
   async update(id: number, dto: UpdateStockDto): Promise<{ message: string }> {
     await this.dataSource.query(
-      `CALL manage_stock($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
+      `CALL manage_stock($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
       [
         'U',
         id,
         dto.date ?? null,
         dto.godown ?? null,
         dto.type ?? null,
-        dto.qty ?? null,
         dto.amount ?? null,
         dto.customerName ?? null,
         dto.weightChorsa ?? null,

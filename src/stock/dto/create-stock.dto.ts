@@ -15,11 +15,6 @@ export class CreateStockDto {
   @IsEnum(['buy', 'sell'])
   type: string;
 
-  @ApiPropertyOptional({ example: 10.5 })
-  @IsOptional()
-  @IsNumber()
-  qty: number;
-
   @ApiPropertyOptional({ example: 50000.00 })
   @IsOptional()
   @IsNumber()

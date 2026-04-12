@@ -21,11 +21,6 @@ export class UpdateStockDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
-  qty: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsNumber()
   amount: number;
 
   @ApiPropertyOptional()
